@@ -1,0 +1,81 @@
+run:
+Creating room
+id set
+x pos set
+y pos set
+set width
+set height
+creating Creature
+monster created
+name set
+id set
+add creature
+x pos set
+y pos set
+type set
+setHP
+max hits set
+x pos set
+y pos set
+add creature
+creating Creature
+monster created
+name set
+id set
+add creature
+x pos set
+y pos set
+type set
+setHP
+max hits set
+x pos set
+y pos set
+add creature
+creating Creature
+player created
+id set
+visible set
+x pos set
+y pos set
+setHP
+max hits set
+set HP moves
+creating action
+creating endgame player action
+set death action
+set action message
+x pos set
+y pos set
+creating a new room rinkrink
+Creating room
+id set
+x pos set
+y pos set
+set width
+set height
+creating Creature
+monster created
+name set
+id set
+add creature
+x pos set
+y pos set
+type set
+setHP
+max hits set
+x pos set
+y pos set
+add creature
+creating Creature
+monster created
+name set
+id set
+add creature
+x pos set
+y pos set
+type set
+setHP
+max hits set
+x pos set
+y pos set
+add creature
