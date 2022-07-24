@@ -11,7 +11,10 @@ public class Displayable {
     public int y;
     public int width;
     public int height;
-
+    public int dispPosX;
+    public int dispPosY;
+    private boolean hallucinate = false;
+    private char hChar = 'X';
     public Displayable(){
     }
 
@@ -54,5 +57,29 @@ public class Displayable {
 
     public void setHeight(int y){
         this.height = y;
+    }
+
+    public char getChar() {
+        if (hallucinate) {
+            return getHChar();
+        } else {
+            return getType();
+        }
+    }
+
+    public void setHallucinate(boolean val) {
+        hallucinate = val;
+    }
+
+    public void setHChar(char _hChar) {
+        hChar = _hChar;
+    }
+
+    public char getHChar() {
+        return hChar;
+    }
+
+    public char getType() {
+        return type;
     }
 }

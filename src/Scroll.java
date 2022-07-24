@@ -5,9 +5,10 @@ public class Scroll extends Item{
     private final String name;
     private int room;
     private int serial;
-
+    public char type = '?';
     public Scroll(String name){
         this.name = name;
+        setType('?');
     }
 
     public void setID(int room, int serial){

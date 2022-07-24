@@ -30,6 +30,8 @@ public class Rogue implements Runnable{
         displayGrid = new ObjectDisplayGrid(width, height + 6);
     }
     private static Player player;
+    private int ppX;
+    private int ppY;
 
     @Override
     public void run(){
@@ -62,6 +64,8 @@ public class Rogue implements Runnable{
             if (room.player != null){
                 player = room.player;
                 hp = player.Hp;
+                ppX = player.x + room.x;
+                ppY = player.y + room.y + dungeon.topHeight;
                 displayGrid.addObjectToDisplay(new Char('@'), player.x + room.x, player.y + room.y + dungeon.topHeight);
             }
         }
@@ -119,11 +123,11 @@ public class Rogue implements Runnable{
             Item item = dungeon.items.get(i);
             int itemr = item.room;
             if(item.getClass() == Sword.class){
-                displayGrid.addObjectToDisplay(new Char(')'), item.x + dungeon.rooms.get(itemr).x, item.y + dungeon.rooms.get(itemr).y + dungeon.topHeight);
+                displayGrid.addObjectToDisplay(item, item.x + dungeon.rooms.get(itemr).x, item.y + dungeon.rooms.get(itemr).y + dungeon.topHeight);
             } else if(item.getClass() == Armor.class){
-                displayGrid.addObjectToDisplay(new Char(']'), item.x + dungeon.rooms.get(itemr).x, item.y + dungeon.rooms.get(itemr).y + dungeon.topHeight);
+                displayGrid.addObjectToDisplay(item, item.x + dungeon.rooms.get(itemr).x, item.y + dungeon.rooms.get(itemr).y + dungeon.topHeight);
             } else if(item.getClass() == Scroll.class){
-                displayGrid.addObjectToDisplay(new Char('?'), item.x + dungeon.rooms.get(itemr).x, item.y + dungeon.rooms.get(itemr).y + dungeon.topHeight);
+                displayGrid.addObjectToDisplay(item, item.x + dungeon.rooms.get(itemr).x, item.y + dungeon.rooms.get(itemr).y + dungeon.topHeight);
             }
         }
 
@@ -172,7 +176,7 @@ public class Rogue implements Runnable{
         testThread.start();
 
         testThread.join();
-        rogue.playerMotion = new Thread(new KeyStrokePrinter(displayGrid, player));
+        rogue.playerMotion = new Thread(new KeyStrokePrinter(displayGrid, player, dungeon, rogue.ppX, rogue.ppY));
         rogue.playerMotion.start();
         rogue.playerMotion.join();
     }

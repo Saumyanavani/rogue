@@ -5,8 +5,11 @@ public class Armor extends Item{
     public int serial;
     public int room;
 
+
+
     public Armor(String name){
         this.name = name;
+        setType(')');
     }
 
     public void setID(int room, int serial){

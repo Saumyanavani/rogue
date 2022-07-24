@@ -10,6 +10,7 @@ public class Player extends Creature {
     public int serial;
     public int hpMoves;
     public int room;
+    public char type = '@';
     public ArrayList<Item> pack = new ArrayList<Item>();
 
     public Player(){
