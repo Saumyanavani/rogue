@@ -23,8 +23,8 @@
                 <posX>2</posX>
                 <posY>2</posY>
                 <type>T</type>
-                <hp>1</hp>
-                <maxhit>50</maxhit>
+                <hp>50</hp>
+                <maxhit>1</maxhit>
                 <CreatureAction name="Remove" type ="death">
                 </CreatureAction>
                 <CreatureAction name="YouWin" type = "death">

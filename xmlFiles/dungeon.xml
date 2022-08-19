@@ -10,8 +10,8 @@
                <posX>3</posX>
                <posY>4</posY>
                <type>T</type>
-               <hp>7</hp>
-               <maxhit>10</maxhit>
+               <hp>100</hp>
+               <maxhit>100</maxhit>
            </Monster>
            <Monster name="Snake" room="1" serial="3">
                <posX>5</posX>
@@ -24,7 +24,7 @@
                 <visible>1</visible>
                 <posX>2</posX>
                 <posY>2</posY>
-                <hp>99</hp>
+                <hp>1</hp>
                 <maxhit>1</maxhit>
                 <hpMoves>5</hpMoves>
                 <CreatureAction name="EndGame" type="death">

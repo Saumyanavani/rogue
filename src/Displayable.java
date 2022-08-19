@@ -82,4 +82,8 @@ public class Displayable {
     public char getType() {
         return type;
     }
+
+    public int getHpm(){
+        return this.hpMoves;
+    }
 }

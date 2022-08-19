@@ -15,4 +15,12 @@ public class Scroll extends Item{
         this.room = room;
         this.serial = serial;
     }
+
+    public String toString(){
+        return "Scroll";
+    }
+
+    public String returnName(){
+        return this.name;
+    }
 }

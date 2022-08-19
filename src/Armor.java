@@ -1,10 +1,10 @@
 package src;
 
 public class Armor extends Item{
-    public String name;
+    //public String name;
     public int serial;
     public int room;
-
+    // public boolean worn = false;
 
 
     public Armor(String name){
@@ -19,5 +19,9 @@ public class Armor extends Item{
 
     public void setName(String name){
         this.name = name;
+    }
+
+    public String toString(){
+        return "Armor";
     }
 }

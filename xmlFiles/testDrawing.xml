@@ -111,8 +111,8 @@
                 <visible>1</visible>
                 <posX>7</posX>
                 <posY>3</posY>
-                <hp>20</hp>
-                <hpMoves>5</hpMoves>
+                <hp>100</hp>
+                <hpMoves>1</hpMoves>
                 <maxhit>6</maxhit>
                 <CreatureAction name="Remove" type="death">
                 </CreatureAction>

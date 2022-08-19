@@ -98,13 +98,14 @@ public class DungeonXMLHandler extends DefaultHandler{
             Armor armor = new Armor(name);
             displayableBeingParsed.push(armor);
             itemBeingParsed = armor;
+            System.out.println("ARMOR BEING DETECTED: " + armor.name);
             if(creatureBeingParsed != null){
                 if (creatureBeingParsed.getClass() == Player.class){
                     Player player = (Player) creatureBeingParsed;
-                    player.setArmor(armor);
+                    player.addItem(armor, name);
                 }
             } else {
-                dungeon.addItem(armor);
+                dungeon.addItem(armor, name);
             }
 
         } else if (qName.equalsIgnoreCase("Sword")){
@@ -118,10 +119,10 @@ public class DungeonXMLHandler extends DefaultHandler{
             if (creatureBeingParsed != null){
                 if (creatureBeingParsed.getClass() == Player.class){
                     Player player = (Player) creatureBeingParsed;
-                    player.setWeapon(sword);
+                    player.addItem(sword, name);
                 }
             } else {
-                dungeon.addItem(sword);
+                dungeon.addItem(sword, name);
             }
 //            if (creatureBeingParsed.getClass() == Player.class){
 //                Player player = (Player) creatureBeingParsed;
@@ -135,11 +136,13 @@ public class DungeonXMLHandler extends DefaultHandler{
             int serial = Integer.parseInt(attributes.getValue("serial"));
             Scroll scroll = new Scroll(name);
             scroll.setID(room, serial);
-            if (creatureBeingParsed.getClass() == Player.class){
-                Player player = (Player) creatureBeingParsed;
-                player.addItem(scroll);
+            if (creatureBeingParsed != null){
+                if (creatureBeingParsed.getClass() == Player.class){
+                    Player player = (Player) creatureBeingParsed;
+                    player.addItem(scroll, name);
+                }
             } else {
-                dungeon.addItem(scroll);
+                dungeon.addItem(scroll, name);
             }
             //dungeon.addItem(scroll);
             displayableBeingParsed.push(scroll);

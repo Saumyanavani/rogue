@@ -37,8 +37,9 @@ public class Dungeon {
         passages.add(passage);
     }
 
-    public void addItem(Item item){
+    public void addItem(Item item, String name){
         items.add(item);
+        item.name = name;
     }
 
 }

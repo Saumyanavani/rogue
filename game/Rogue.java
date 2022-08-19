@@ -57,7 +57,7 @@ public class Rogue implements Runnable{
                 Creature creature = room.creatures.get(x);
                 System.out.println(creature.type);
                 System.out.println(creature.x + " " + creature.y);
-                displayGrid.addObjectToDisplay(new Char(creature.type), creature.x + room.x, creature.y + room.y + dungeon.topHeight);
+                displayGrid.addObjectToDisplay(creature, creature.x + room.x, creature.y + room.y + dungeon.topHeight);
                 System.out.println("Creature pos: " + creature.x + room.x + creature.y + room.y + dungeon.topHeight);
             }
 
@@ -131,7 +131,7 @@ public class Rogue implements Runnable{
             }
         }
 
-        String top = "HP: " + hp + " core: " + "0";
+        String top = "HP: " + hp + " Core: " + player.score;
         for (int i = 0; i < top.length(); i++){
             displayGrid.addObjectToDisplay(new Char(top.charAt(i)), i, 0);
         }
