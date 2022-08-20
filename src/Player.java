@@ -13,6 +13,7 @@ public class Player extends Creature {
     public char type = '@';
     public ArrayList<Item> pack = new ArrayList<Item>();
     public int score = 0;
+    public boolean change = false;
 
     public Player(){
         System.out.println("Player:");

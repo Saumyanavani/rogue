@@ -14,7 +14,7 @@
                 <hp>100</hp>
                 <maxhit>1</maxhit>
                 <hpMoves>5</hpMoves>
-                <CreatureAction name="DropPack" type="hit">
+                <CreatureAction name="dropPack" type="hit">
                     <actionMessage>You have dropped an item from your pack!</actionMessage>
                 </CreatureAction>
             </Player>

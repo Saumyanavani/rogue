@@ -22,6 +22,9 @@ public class KeyStrokePrinter implements InputObserver, Runnable {
     private boolean take = false;
     private boolean drop = false;
     private boolean endGame = false;
+    private boolean read = false;
+    private boolean help = false;
+
     public KeyStrokePrinter(ObjectDisplayGrid grid, Player player, Dungeon dungeon, int ppX, int ppY) {
         inputQueue = new ConcurrentLinkedQueue<>();
         displayGrid = grid;
@@ -68,6 +71,7 @@ public class KeyStrokePrinter implements InputObserver, Runnable {
                             if (armor instanceof Armor){
                                 player.setArmor(armor);
                                 armor.worn = true;
+                                player.change = true;
                                 for (int i = 0; i < 25; i++) {
                                     displayGrid.removeObjectFromDisplay( i, (dungeon.gameHeight + dungeon.topHeight + dungeon.bottomHeight));
                                 }
@@ -128,16 +132,215 @@ public class KeyStrokePrinter implements InputObserver, Runnable {
                             }
                             take = !take;
                         }
+                    } else if (read) {
+                        if (ch >= 48 && ch <= 57){
+                            Item scroll = player.pack.get(ch - 49);
+                            if (scroll instanceof Scroll){
+                                //player.setWeapon(sword);
+                                //sword.wielded = true;
+                                doScrollActions(scroll, player);
+                                read = !read;
+                            } else {
+                                for (int i = 0; i < 100; i++) {
+                                    displayGrid.removeObjectFromDisplay( i, (dungeon.gameHeight + dungeon.topHeight + dungeon.bottomHeight));
+                                }
+                                StringBuilder packstr = new StringBuilder("Info: Chosen item is not a sroll!");
+                                for (int k = 0; k < packstr.length(); k++){
+                                    displayGrid.addObjectToDisplay(new Char(packstr.charAt(k)), k, (dungeon.gameHeight + dungeon.topHeight + dungeon.bottomHeight));
+                                }
+                            }
+                        } else {
+                            for (int i = 0; i < 100; i++) {
+                                displayGrid.removeObjectFromDisplay( i, (dungeon.gameHeight + dungeon.topHeight + dungeon.bottomHeight));
+                            }
+                            StringBuilder packstr = new StringBuilder("Info: Please choose item in pack");
+                            for (int k = 0; k < packstr.length(); k++){
+                                displayGrid.addObjectToDisplay(new Char(packstr.charAt(k)), k, (dungeon.gameHeight + dungeon.topHeight + dungeon.bottomHeight));
+                            }
+                            read = !read;
+                        }
                     } else if (drop) {
                         if (ch >= 48 && ch <= 57){
                             int ch1 = ch - 49;
                             System.out.println("CH is " + ch1);
                             itemDrop(playerX, playerY, ch1);
                         }
+                    } else if (help) {
+                        if (ch == 'h'){
+                            for( int i = 0; i< 100; i++){
+                                displayGrid.removeObjectFromDisplay(i, (dungeon.gameHeight + dungeon.topHeight + dungeon.bottomHeight));
+                            }
+                            StringBuilder packstr = new StringBuilder("Info: Move player left");
+                            for (int k = 0; k < packstr.length(); k++) {
+                                displayGrid.addObjectToDisplay(new Char(packstr.charAt(k)), k, (dungeon.gameHeight + dungeon.topHeight + dungeon.bottomHeight));
+                                try {
+                                    Thread.sleep(2);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        } else if (ch == 'j'){
+                            for( int i = 0; i< 100; i++){
+                                displayGrid.removeObjectFromDisplay(i, (dungeon.gameHeight + dungeon.topHeight + dungeon.bottomHeight));
+                            }
+                            StringBuilder packstr = new StringBuilder("Info: Move player down");
+                            for (int k = 0; k < packstr.length(); k++) {
+                                displayGrid.addObjectToDisplay(new Char(packstr.charAt(k)), k, (dungeon.gameHeight + dungeon.topHeight + dungeon.bottomHeight));
+                                try {
+                                    Thread.sleep(2);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        } else if (ch == 'k'){
+                            for( int i = 0; i< 100; i++){
+                                displayGrid.removeObjectFromDisplay(i, (dungeon.gameHeight + dungeon.topHeight + dungeon.bottomHeight));
+                            }
+                            StringBuilder packstr = new StringBuilder("Info: Move player up");
+                            for (int k = 0; k < packstr.length(); k++) {
+                                displayGrid.addObjectToDisplay(new Char(packstr.charAt(k)), k, (dungeon.gameHeight + dungeon.topHeight + dungeon.bottomHeight));
+                                try {
+                                    Thread.sleep(2);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        } else if (ch == 'l'){
+                            for( int i = 0; i< 100; i++){
+                                displayGrid.removeObjectFromDisplay(i, (dungeon.gameHeight + dungeon.topHeight + dungeon.bottomHeight));
+                            }
+                            StringBuilder packstr = new StringBuilder("Info: move player right");
+                            for (int k = 0; k < packstr.length(); k++) {
+                                displayGrid.addObjectToDisplay(new Char(packstr.charAt(k)), k, (dungeon.gameHeight + dungeon.topHeight + dungeon.bottomHeight));
+                                try {
+                                    Thread.sleep(2);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        } else if (ch == 'i'){
+                            for( int i = 0; i< 100; i++){
+                                displayGrid.removeObjectFromDisplay(i, (dungeon.gameHeight + dungeon.topHeight + dungeon.bottomHeight));
+                            }
+                            StringBuilder packstr = new StringBuilder("Info: Turn pack display on/off");
+                            for (int k = 0; k < packstr.length(); k++) {
+                                displayGrid.addObjectToDisplay(new Char(packstr.charAt(k)), k, (dungeon.gameHeight + dungeon.topHeight + dungeon.bottomHeight));
+                                try {
+                                    Thread.sleep(2);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        } else if (ch == 'p'){
+                            for( int i = 0; i< 100; i++){
+                                displayGrid.removeObjectFromDisplay(i, (dungeon.gameHeight + dungeon.topHeight + dungeon.bottomHeight));
+                            }
+                            StringBuilder packstr = new StringBuilder("Info: Pick Item");
+                            for (int k = 0; k < packstr.length(); k++) {
+                                displayGrid.addObjectToDisplay(new Char(packstr.charAt(k)), k, (dungeon.gameHeight + dungeon.topHeight + dungeon.bottomHeight));
+                                try {
+                                    Thread.sleep(2);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        } else if (ch == 'd') {
+                            for( int i = 0; i< 100; i++){
+                                displayGrid.removeObjectFromDisplay(i, (dungeon.gameHeight + dungeon.topHeight + dungeon.bottomHeight));
+                            }
+                            StringBuilder packstr = new StringBuilder("Info: d <number> is used to drop selected item from pack");
+                            for (int k = 0; k < packstr.length(); k++) {
+                                displayGrid.addObjectToDisplay(new Char(packstr.charAt(k)), k, (dungeon.gameHeight + dungeon.topHeight + dungeon.bottomHeight));
+                                try {
+                                    Thread.sleep(2);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        } else if (ch == 'w'){
+                            for( int i = 0; i< 100; i++){
+                                displayGrid.removeObjectFromDisplay(i, (dungeon.gameHeight + dungeon.topHeight + dungeon.bottomHeight));
+                            }
+                            StringBuilder packstr = new StringBuilder("Info: w <number> used to wear chosen armor");
+                            for (int k = 0; k < packstr.length(); k++) {
+                                displayGrid.addObjectToDisplay(new Char(packstr.charAt(k)), k, (dungeon.gameHeight + dungeon.topHeight + dungeon.bottomHeight));
+                                try {
+                                    Thread.sleep(2);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        } else if (ch == 't'){
+                            for( int i = 0; i< 100; i++){
+                                displayGrid.removeObjectFromDisplay(i, (dungeon.gameHeight + dungeon.topHeight + dungeon.bottomHeight));
+                            }
+                            StringBuilder packstr = new StringBuilder("Info: t <number> used to wield selected sword");
+                            for (int k = 0; k < packstr.length(); k++) {
+                                displayGrid.addObjectToDisplay(new Char(packstr.charAt(k)), k, (dungeon.gameHeight + dungeon.topHeight + dungeon.bottomHeight));
+                                try {
+                                    Thread.sleep(2);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        } else if (ch == 'r'){
+                            for( int i = 0; i< 100; i++){
+                                displayGrid.removeObjectFromDisplay(i, (dungeon.gameHeight + dungeon.topHeight + dungeon.bottomHeight));
+                            }
+                            StringBuilder packstr = new StringBuilder("Info: r <number> to read chosen scroll");
+                            for (int k = 0; k < packstr.length(); k++) {
+                                displayGrid.addObjectToDisplay(new Char(packstr.charAt(k)), k, (dungeon.gameHeight + dungeon.topHeight + dungeon.bottomHeight));
+                                try {
+                                    Thread.sleep(2);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        } else if (ch == 'c'){
+                            for( int i = 0; i< 100; i++){
+                                displayGrid.removeObjectFromDisplay(i, (dungeon.gameHeight + dungeon.topHeight + dungeon.bottomHeight));
+                            }
+                            StringBuilder packstr = new StringBuilder("Info: Take off/change worn armor");
+                            for (int k = 0; k < packstr.length(); k++) {
+                                displayGrid.addObjectToDisplay(new Char(packstr.charAt(k)), k, (dungeon.gameHeight + dungeon.topHeight + dungeon.bottomHeight));
+                                try {
+                                    Thread.sleep(2);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        } else if ((ch == 'e') || (ch == 'E')){
+                            for( int i = 0; i< 100; i++){
+                                displayGrid.removeObjectFromDisplay(i, (dungeon.gameHeight + dungeon.topHeight + dungeon.bottomHeight));
+                            }
+                            StringBuilder packstr = new StringBuilder("Info: Used to end game");
+                            for (int k = 0; k < packstr.length(); k++) {
+                                displayGrid.addObjectToDisplay(new Char(packstr.charAt(k)), k, (dungeon.gameHeight + dungeon.topHeight + dungeon.bottomHeight));
+                                try {
+                                    Thread.sleep(2);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        } else if (ch == '?'){
+                            for( int i = 0; i< 100; i++){
+                                displayGrid.removeObjectFromDisplay(i, (dungeon.gameHeight + dungeon.topHeight + dungeon.bottomHeight));
+                            }
+                            StringBuilder packstr = new StringBuilder("Info: Lists all commands");
+                            for (int k = 0; k < packstr.length(); k++) {
+                                displayGrid.addObjectToDisplay(new Char(packstr.charAt(k)), k, (dungeon.gameHeight + dungeon.topHeight + dungeon.bottomHeight));
+                                try {
+                                    Thread.sleep(2);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }
+                        help = false;
                     } else if (ch == 'X') {
                         System.out.println("got an X, ending input checking");
                         return false;
-                    } else if (ch == 'h'){
+                    } else if (ch == 'h') {
                         playerm(playerX - 1, playerY, player);
                         System.out.println("Here");
                     } else if (ch == 'k') {
@@ -149,40 +352,112 @@ public class KeyStrokePrinter implements InputObserver, Runnable {
                     } else if (ch == 'l') {
                         playerm(playerX + 1, playerY, player);
                         System.out.println("Here");
-                    } else if (ch == 'i'){
+                    } else if (ch == 'i') {
                         displayPack = !displayPack;
                         showPack();
-                    } else if (ch == 'p'){
+                    } else if (ch == 'p') {
                         itemPick(playerX, playerY);
-                    } else if (ch == 'd'){
+                    } else if (ch == 'd') {
                         showPack();
                         for (int i = 0; i < 25; i++) {
-                            displayGrid.removeObjectFromDisplay( i, (dungeon.gameHeight + dungeon.topHeight + dungeon.bottomHeight));
+                            displayGrid.removeObjectFromDisplay(i, (dungeon.gameHeight + dungeon.topHeight + dungeon.bottomHeight));
                         }
                         StringBuilder packstr = new StringBuilder("Info: Pick item to drop");
-                        for (int k = 0; k < packstr.length(); k++){
+                        for (int k = 0; k < packstr.length(); k++) {
                             displayGrid.addObjectToDisplay(new Char(packstr.charAt(k)), k, (dungeon.gameHeight + dungeon.topHeight + dungeon.bottomHeight));
                         }
                         drop = !drop;
                         //itemDrop(playerX, playerY);
-                    } else if (ch == 'w'){
+                    } else if (ch == 'w') {
                         for (int i = 0; i < 100; i++) {
-                            displayGrid.removeObjectFromDisplay( i, (dungeon.gameHeight + dungeon.topHeight + dungeon.bottomHeight));
+                            displayGrid.removeObjectFromDisplay(i, (dungeon.gameHeight + dungeon.topHeight + dungeon.bottomHeight));
                         }
                         StringBuilder packstr = new StringBuilder("Info: Pick Armor to wear");
-                        for (int k = 0; k < packstr.length(); k++){
+                        for (int k = 0; k < packstr.length(); k++) {
                             displayGrid.addObjectToDisplay(new Char(packstr.charAt(k)), k, (dungeon.gameHeight + dungeon.topHeight + dungeon.bottomHeight));
                         }
                         wear = !wear;
-                    }  else if (ch == 't'){
+                    } else if (ch == 't') {
                         for (int i = 0; i < 100; i++) {
-                            displayGrid.removeObjectFromDisplay( i, (dungeon.gameHeight + dungeon.topHeight + dungeon.bottomHeight));
+                            displayGrid.removeObjectFromDisplay(i, (dungeon.gameHeight + dungeon.topHeight + dungeon.bottomHeight));
                         }
                         StringBuilder packstr = new StringBuilder("Info: Pick Sword to take");
-                        for (int k = 0; k < packstr.length(); k++){
+                        for (int k = 0; k < packstr.length(); k++) {
                             displayGrid.addObjectToDisplay(new Char(packstr.charAt(k)), k, (dungeon.gameHeight + dungeon.topHeight + dungeon.bottomHeight));
                         }
                         take = !take;
+                    } else if (ch == 'r') {
+                        for (int i = 0; i < 100; i++) {
+                            displayGrid.removeObjectFromDisplay(i, (dungeon.gameHeight + dungeon.topHeight + dungeon.bottomHeight));
+                        }
+                        StringBuilder packstr = new StringBuilder("Info: Pick Scroll to read");
+                        for (int k = 0; k < packstr.length(); k++) {
+                            displayGrid.addObjectToDisplay(new Char(packstr.charAt(k)), k, (dungeon.gameHeight + dungeon.topHeight + dungeon.bottomHeight));
+                        }
+                        read = !read;
+                    } else if ((ch == 'e') || (ch == 'E')) {
+                        for (int i = 0; i < 100; i++) {
+                            displayGrid.removeObjectFromDisplay(i, (dungeon.gameHeight + dungeon.topHeight + dungeon.bottomHeight));
+                        }
+                        StringBuilder packstr = new StringBuilder("Info: E pressed! Game has ended!");
+                        for (int k = 0; k < packstr.length(); k++) {
+                            displayGrid.addObjectToDisplay(new Char(packstr.charAt(k)), k, (dungeon.gameHeight + dungeon.topHeight + dungeon.bottomHeight));
+                        }
+                        endGame = !endGame;
+                    } else if (ch == '?') {
+                        for (int i = 0; i < 100; i++) {
+                            displayGrid.removeObjectFromDisplay(i, (dungeon.gameHeight + dungeon.topHeight + dungeon.bottomHeight));
+                        }
+                        StringBuilder packstr = new StringBuilder("Info: h j k l p i d e w t r c ? 0-9 H. H <cmd> for more info!");
+                        for (int k = 0; k < packstr.length(); k++) {
+                            displayGrid.addObjectToDisplay(new Char(packstr.charAt(k)), k, (dungeon.gameHeight + dungeon.topHeight + dungeon.bottomHeight));
+                        }
+                    } else if (ch == 'c') {
+                        if (player.change) {
+                            for (int l = 0; l < player.pack.size(); l++) {
+                                if (player.pack.get(l) instanceof Armor) {
+                                    if (player.pack.get(l).worn) {
+                                        player.pack.get(l).worn = false;
+                                        player.armor = null;
+                                        player.change = false;
+                                    }
+                                }
+                            }
+                            for (int x = 0; x < 100; x++) {
+                                displayGrid.removeObjectFromDisplay(x, (dungeon.gameHeight + dungeon.topHeight + dungeon.bottomHeight));
+                            }
+                            StringBuilder packstr = new StringBuilder("Info: Armor has been unequipped");
+                            for (int x = 0; x < packstr.length(); x++) {
+                                displayGrid.addObjectToDisplay(new Char(packstr.charAt(x)), x, (dungeon.gameHeight + dungeon.topHeight + dungeon.bottomHeight));
+                                try { // delay monster attack
+                                    Thread.sleep(2);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        } else {
+                            for (int i = 0; i < 100; i++) {
+                                displayGrid.removeObjectFromDisplay(i, (dungeon.gameHeight + dungeon.topHeight + dungeon.bottomHeight));
+                            }
+                            StringBuilder packstr = new StringBuilder("Info: No armor being worn!");
+                            for (int k = 0; k < packstr.length(); k++) {
+                                displayGrid.addObjectToDisplay(new Char(packstr.charAt(k)), k, (dungeon.gameHeight + dungeon.topHeight + dungeon.bottomHeight));
+                            }
+                        }
+                    } else if (ch == 'H') {
+                        help = true;
+                        for( int i = 0; i< 100; i++){
+                            displayGrid.removeObjectFromDisplay(i, (dungeon.gameHeight + dungeon.topHeight + dungeon.bottomHeight));
+                        }
+                        StringBuilder packstr = new StringBuilder("Info: Choose command for more info!");
+                        for (int k = 0; k < packstr.length(); k++) {
+                            displayGrid.addObjectToDisplay(new Char(packstr.charAt(k)), k, (dungeon.gameHeight + dungeon.topHeight + dungeon.bottomHeight));
+                            try {
+                                Thread.sleep(2);
+                            } catch (InterruptedException e) {
+                                e.printStackTrace();
+                            }
+                        }
                     }
                 }
                  else {
@@ -191,6 +466,41 @@ public class KeyStrokePrinter implements InputObserver, Runnable {
             }
         }
         return true;
+    }
+
+    private void doScrollActions(Item scroll, Player player) {
+        System.out.println("Read scroll");
+        for (int i = 0; i < scroll.actions.size(); i++){
+            System.out.println(scroll.actions.size());
+            System.out.println(scroll.actions.get(i).type);
+            if (scroll.actions.get(i).type.equalsIgnoreCase("item")){
+                if (scroll.actions.get(i).name.equalsIgnoreCase("BlessArmor")){
+                    for (int k = 0; k < player.pack.size(); k++){
+                        Item item = player.pack.get(k);
+                        if (item instanceof Armor){
+                            if (item.worn){
+                                item.v += scroll.actions.get(i).v;
+                                for (int j = 0; j < 150; j++) {
+                                    displayGrid.removeObjectFromDisplay( j, (dungeon.gameHeight + dungeon.topHeight + dungeon.bottomHeight));
+                                }
+                                StringBuilder packstr = new StringBuilder("Info: " + scroll.actions.get(i).msg);
+                                for (int l = 0; l < packstr.length(); l++){
+                                    displayGrid.addObjectToDisplay(new Char(packstr.charAt(l)), l, (dungeon.gameHeight + dungeon.topHeight + dungeon.bottomHeight));
+                                }
+                            } else {
+                                for (int j = 0; j < 150; j++) {
+                                    displayGrid.removeObjectFromDisplay( j, (dungeon.gameHeight + dungeon.topHeight + dungeon.bottomHeight));
+                                }
+                                StringBuilder packstr = new StringBuilder("Info: Scroll had no effect because no armor is worn!");
+                                for (int l = 0; l < packstr.length(); l++){
+                                    displayGrid.addObjectToDisplay(new Char(packstr.charAt(l)), l, (dungeon.gameHeight + dungeon.topHeight + dungeon.bottomHeight));
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
 
     public void itemPick(int playerX, int playerY) {
@@ -333,6 +643,16 @@ public class KeyStrokePrinter implements InputObserver, Runnable {
         Random random = new Random();
         int dam = random.nextInt(player.maxHit);
         dam += 1;
+        for (int i = 0; i < player.pack.size(); i++){
+            Item item = player.pack.get(i);
+            if (item instanceof Sword){
+                if (item.wielded){
+                    System.out.println("Before armor: " + dam);
+                    dam += item.v;
+                    System.out.println("After armor: " + dam);
+                }
+            }
+        }
         if (dam != 0){
             monster.setHp(monster.Hp - dam);
             if (monster.Hp <= 0){
@@ -351,7 +671,7 @@ public class KeyStrokePrinter implements InputObserver, Runnable {
                                 displayGrid.addObjectToDisplay(new Char(packstr2.charAt(k)), k, (dungeon.gameHeight + dungeon.topHeight + dungeon.bottomHeight));
                             }
 
-                            try { // delay monster attack
+                            try {
                                 Thread.sleep(2);
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
@@ -411,6 +731,19 @@ public class KeyStrokePrinter implements InputObserver, Runnable {
         Random rand2 = new Random();
         int dam2 = rand2.nextInt(monster.maxHit);
         dam2 += 1;
+        for (int i = 0; i < player.pack.size(); i++){
+            Item item = player.pack.get(i);
+            if (item instanceof Armor){
+                if (item.worn){
+                    //System.out.println("Before armor: " + dam2);
+                    dam2 -= item.v;
+                    if (dam2 < 0){
+                        dam2 = 0;
+                    }
+                    //System.out.println("After armor: " + dam2);
+                }
+            }
+        }
         if (dam2 != 0){
             player.setHp(player.Hp - dam);
             if (player.Hp <= 0){
@@ -444,6 +777,19 @@ public class KeyStrokePrinter implements InputObserver, Runnable {
                                 endGame = !endGame;
                             }
                         }
+                        if (creatureAction.name.equalsIgnoreCase("ChangeDisplayedType")){
+                            player.type = creatureAction.c;
+                            if (!endGame){
+                                endGame = !endGame;
+                            }
+                        }
+                        if (creatureAction.name.equalsIgnoreCase("UpdateDisplay")){
+                            Displayable removed = displayGrid.removeObjectFromDisplay(playerX, playerY);
+                            displayGrid.addObjectToDisplay(new Char(player.type), playerX, playerY);
+                            if (!endGame){
+                                endGame = !endGame;
+                            }
+                        }
                         for (int i = 0; i < 100; i++) {
                             displayGrid.removeObjectFromDisplay( i, 0);
                         }
@@ -471,6 +817,14 @@ public class KeyStrokePrinter implements InputObserver, Runnable {
                         if (creatureAction.name.equalsIgnoreCase("dropPack")){
                             itemDropaction(playerX, playerY, 0);
                             System.out.println("Item dropped");
+                        }
+                    }
+                    if (creatureAction.type.equalsIgnoreCase("hit")) {
+                        if (creatureAction.name.equalsIgnoreCase("emptyPack")){
+                            while(player.pack.size() > 0){
+                                itemDropaction(playerX, playerY, 0);
+                                System.out.println("Item dropped");
+                            }
                         }
                     }
                 }

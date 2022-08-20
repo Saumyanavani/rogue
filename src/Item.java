@@ -1,5 +1,8 @@
 package src;
 
+import java.sql.Array;
+import java.util.ArrayList;
+
 public class Item extends Displayable{
 
     public Creature owner;
@@ -9,7 +12,7 @@ public class Item extends Displayable{
     public String name;
     public boolean worn = false;
     public boolean wielded = false;
-
+    public ArrayList<ItemAction> actions = new ArrayList<ItemAction>();
     public void setOwner(Creature owner){
         this.owner = owner;
     }
@@ -26,8 +29,8 @@ public class Item extends Displayable{
         this.mg = mg;
     }
 
-    public void setAction(ItemAction action) {
-        this.action = action;
+    public void addAction(ItemAction action) {
+        actions.add(action);
     }
 
     public String returnName() {
@@ -35,13 +38,13 @@ public class Item extends Displayable{
         this.printName();
         if ((this.worn) || (this.wielded)) {
             if(this.worn) {
-                return ("[w] " + this.name);
+                return ("[w] " + this.name + " [" + this.v + "]");
             }
             if (this.wielded){
-                return ("[t] " + this.name);
+                return ("[t] " + this.name + " [" + this.v + "]");
             }
         } else {
-            return this.name;
+            return (this.name + " [" + this.v + "]");
         }
         return " ";
     }

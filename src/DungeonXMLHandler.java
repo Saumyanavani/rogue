@@ -153,7 +153,7 @@ public class DungeonXMLHandler extends DefaultHandler{
             ItemAction action = new ItemAction ((Item) itemBeingParsed);
             action.setName(name);
             action.setType(type);
-            itemBeingParsed.setAction(action);
+            itemBeingParsed.addAction(action);
             actionBeingParsed = action;
         }
 
