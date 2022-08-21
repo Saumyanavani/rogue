@@ -24,6 +24,9 @@ public class KeyStrokePrinter implements InputObserver, Runnable {
     private boolean endGame = false;
     private boolean read = false;
     private boolean help = false;
+    private int hmoves = 0;
+    private boolean hallucinateMode = false;
+    private int hCheck = 0;
 
     public KeyStrokePrinter(ObjectDisplayGrid grid, Player player, Dungeon dungeon, int ppX, int ppY) {
         inputQueue = new ConcurrentLinkedQueue<>();
@@ -139,6 +142,7 @@ public class KeyStrokePrinter implements InputObserver, Runnable {
                                 //player.setWeapon(sword);
                                 //sword.wielded = true;
                                 doScrollActions(scroll, player);
+                                player.pack.remove(ch-49);
                                 read = !read;
                             } else {
                                 for (int i = 0; i < 100; i++) {
@@ -469,6 +473,7 @@ public class KeyStrokePrinter implements InputObserver, Runnable {
     }
 
     private void doScrollActions(Item scroll, Player player) {
+        Random random = new Random();
         System.out.println("Read scroll");
         for (int i = 0; i < scroll.actions.size(); i++){
             System.out.println(scroll.actions.size());
@@ -498,6 +503,11 @@ public class KeyStrokePrinter implements InputObserver, Runnable {
                             }
                         }
                     }
+                }
+                if (scroll.actions.get(i).name.equalsIgnoreCase("hallucinate")){
+                    hallucinateMode = true;
+                    hCheck = scroll.actions.get(i).v;
+                    hmoves = 0;
                 }
             }
         }
@@ -604,11 +614,47 @@ public class KeyStrokePrinter implements InputObserver, Runnable {
     }
 
     public void playerm(int posX, int posY, Player player){
+        ArrayList<Char> hchars = new ArrayList<Char>();
+        hchars.add(new Char(']'));
+        hchars.add(new Char(')'));
+        hchars.add(new Char('?'));
+        hchars.add(new Char('T'));
+        hchars.add(new Char('S'));
+        hchars.add(new Char('H'));
+        hchars.add(new Char('@'));
+        ArrayList<Displayable> hspaces = new ArrayList<Displayable>();
+        Displayable space = null;
+        char spaceChar;
+        int length = displayGrid.getlength();
+        int width = displayGrid.getzlength();
+        for (int x = 0; x < dungeon.width; x++) {
+            for (int y = 0; y < dungeon.gameHeight; y++) {
+                space = displayGrid.getObjectFromDisplay(x, y);
+                spaceChar = space.getChar();
+                for (Char h : hchars){
+                    if (h.getChar() == spaceChar){
+                        hspaces.add(space);
+                    }
+                }
+            }
+        }
+
+        if (hallucinateMode){
+            if (hmoves < hCheck){
+                displayGrid.hallucinate(hchars, hspaces);
+            } else {
+                displayGrid.stop(hspaces);
+            }
+        }
+
+
+
         Object p = displayGrid.getObjectFromDisplay(posX, posY);
         System.out.println(p.getClass());
         Displayable s = (Displayable) p;
         System.out.println("Class of displayable is " + p.getClass());
         moveCount += 1;
+        hmoves += 1;
         if (moveCount >= player.getHpm()){
             player.Hp = player.Hp + 1;
             moveCount = 0;

@@ -201,6 +201,24 @@ public class ObjectDisplayGrid extends JFrame implements KeyListener, InputSubje
         return objectGrid[0].length;
     }
 
+    public void hallucinate(ArrayList<Char> hchars, ArrayList<Displayable> hspaces) {
+        Random random = new Random();
+        for (Displayable changeSpace : hspaces) {
+            changeSpace.setHallucinate(true);
+            char newChar = hchars.get(random.nextInt(hchars.size())).getChar();
+            changeSpace.setHChar(newChar);
+            terminal.write(newChar, changeSpace.dispPosX, changeSpace.dispPosY);
+            terminal.repaint();
+        }
+    }
+
+    public void stop(ArrayList<Displayable> hspaces) {
+        for (Displayable changeSpace : hspaces) {
+            changeSpace.setHallucinate(false);
+            writeToTerminal(changeSpace.dispPosX, changeSpace.dispPosY);
+        }
+    }
+
 //    public void teleport(Monster monster, int posX, int posY) {
 //        ArrayList<Displayable> teleports = new ArrayList<>();
 //        for (int i = 0; i < objectGrid.length; i++){

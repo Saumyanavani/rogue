@@ -1,5 +1,7 @@
 package src;
 
+import game.Char;
+
 public class Displayable {
 
     public int maxHit;
