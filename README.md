@@ -13,9 +13,9 @@ ALL DONE!!
 # EXECUTION
 1. Clone the repository in any folder on your computer. 
 2. Extract XML files into the root directory of the game project. 
-2. cd into the directory using a terminal and run the following commands:
+3. cd into the directory using a terminal and run the following commands:
 
-```
+```java
 javac src/Rogue.java
 java src/Rogue <name of XML File for chosen level>
 
